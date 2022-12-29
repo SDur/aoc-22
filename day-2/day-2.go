@@ -20,7 +20,7 @@ func main() {
 	var score = 0
 	for fileScanner.Scan() {
 		var text = fileScanner.Text()
-		var result = int(play(text)) + shapeScore(string(text[2]))
+		var result = int(play(text)) + matchScore(string(text[2]))
 		fmt.Printf("Score for input: %s is: %d", text, result)
 		score += result
 		if err != nil {
@@ -36,19 +36,19 @@ func main() {
 type Outcome int64
 
 const (
-	win  Outcome = 6
-	draw Outcome = 3
-	loss Outcome = 0
+	rock     Outcome = 1
+	paper    Outcome = 2
+	scissors Outcome = 3
 )
 
-func shapeScore(input string) int {
+func matchScore(input string) int {
 	switch input {
 	case "X":
-		return 1
+		return 0
 	case "Y":
-		return 2
-	case "Z":
 		return 3
+	case "Z":
+		return 6
 	default:
 		return 0
 	}
@@ -57,23 +57,23 @@ func shapeScore(input string) int {
 func play(input string) Outcome {
 	switch input {
 	case "A X":
-		return draw
+		return scissors
 	case "A Y":
-		return win
+		return rock
 	case "A Z":
-		return loss
+		return paper
 	case "B X":
-		return loss
+		return rock
 	case "B Y":
-		return draw
+		return paper
 	case "B Z":
-		return win
+		return scissors
 	case "C X":
-		return win
+		return paper
 	case "C Y":
-		return loss
+		return scissors
 	case "C Z":
-		return draw
+		return rock
 	default:
 		fmt.Printf("Error, outside switch: %s", input)
 		return 0
