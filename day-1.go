@@ -43,12 +43,14 @@ func main() {
 			calories = 0
 		}
 	}
+	readFile.Close()
+
 	sort.Slice(elfs, func(i, j int) bool {
 		return elfs[i].Calories > elfs[j].Calories
 	})
 
 	fmt.Printf("least calories is %d \n", elfs[len(elfs)-1].Calories)
-	fmt.Printf("The Answer is %d \n", elfs[0].Calories)
+	var topThree = elfs[0].Calories + elfs[1].Calories + elfs[2].Calories
+	fmt.Printf("The Answer is %d \n", topThree)
 
-	readFile.Close()
 }
