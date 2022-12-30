@@ -20,30 +20,44 @@ func main() {
 
 	var score = 0
 	var items []rune
+
+	var first string
+	var second string
 	for fileScanner.Scan() {
 		var line = fileScanner.Text()
-		var firstHalf = line[:len(line)/2]
-		var secondHalf = line[len(line)/2:]
-		fmt.Printf("\t first: %s second: %s  \n", firstHalf, secondHalf)
-
-		var found = false
-		for _, x := range firstHalf {
-			if found {
-				break
-			}
-			for _, y := range secondHalf {
+		if len(first) == 0 {
+			first = line
+		} else if len(second) == 0 {
+			second = line
+		} else {
+			var third = line
+			var found = false
+			for _, x := range first {
 				if found {
 					break
 				}
-				if x == y {
-					items = append(items, x)
-					score += alphabetIndex(x)
-					fmt.Printf("Found %c as double, with score %d  \n", x, alphabetIndex(x))
-					found = true
+				for _, y := range second {
+					if found {
+						break
+					}
+					if x == y {
+						for _, z := range third {
+							if found {
+								break
+							}
+							if x == z {
+								items = append(items, x)
+								score += alphabetIndex(x)
+								fmt.Printf("Found %c as badge, with score %d  \n", x, alphabetIndex(x))
+								found = true
+							}
+						}
+					}
 				}
 			}
+			first = ""
+			second = ""
 		}
-
 	}
 	readFile.Close()
 
