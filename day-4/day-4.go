@@ -31,9 +31,11 @@ func main() {
 
 		var secondFrom, _ = strconv.Atoi(second[0])
 		var secondTo, _ = strconv.Atoi(second[1])
+		var firstOverlap = (firstFrom >= secondFrom && firstFrom <= secondTo) || (firstTo <= secondTo && firstTo >= secondFrom)
+		var secondOverlap = (secondFrom >= firstFrom && secondFrom <= firstTo) || (secondTo <= firstTo && secondTo >= firstFrom)
 
-		if (firstFrom <= secondFrom && firstTo >= secondTo) || (secondFrom <= firstFrom && secondTo >= firstTo) {
-			fmt.Printf("Found an overlapping pair: %s \n", line)
+		if firstOverlap || secondOverlap {
+			fmt.Printf("Found an overlap in pair: %s \n", line)
 			score++
 		}
 	}
